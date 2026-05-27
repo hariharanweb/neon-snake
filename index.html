@@ -1666,7 +1666,8 @@ document.addEventListener('keydown',function(e){
 var _tx=0,_ty=0;
 document.addEventListener('touchstart',function(e){
   _tx=e.touches[0].clientX; _ty=e.touches[0].clientY;
-  e.preventDefault();
+  var gw=document.getElementById('game-wrap');
+  if(!gw.classList.contains('hidden')) e.preventDefault();
 },{passive:false});
 document.addEventListener('touchend',function(e){
   var ex=e.changedTouches[0].clientX, ey=e.changedTouches[0].clientY;
