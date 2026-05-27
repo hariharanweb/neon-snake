@@ -132,23 +132,23 @@ canvas { display:block; box-shadow:0 0 60px #0ff3, 0 0 120px #0ff1; }
 #name-input::placeholder { color:#246; }
 
 /* ── Responsive / mobile ── */
-#game-canvas-group { position:relative; width:600px; height:600px; flex-shrink:0; }
-#mobile-dpad { display:flex; flex-direction:column; align-items:center; gap:5px; margin-top:10px; padding-bottom:env(safe-area-inset-bottom,8px); }
-.dpad-row { display:flex; gap:5px; align-items:center; }
-.dpad-mid  { width:64px; height:64px; }
+#game-canvas-group { position:relative; width:600px; height:600px; flex-shrink:0; transform-origin:top center; }
+#mobile-dpad { display:flex; flex-direction:column; align-items:center; gap:6px; margin-top:8px; padding-bottom:env(safe-area-inset-bottom,10px); }
+.dpad-row { display:flex; gap:6px; align-items:center; }
+.dpad-mid  { width:80px; height:80px; }
 .dpad-btn {
-  width:64px; height:64px;
-  background:rgba(0,255,255,0.07); border:1.5px solid rgba(0,255,255,0.28);
-  color:#0ff; font-size:24px; border-radius:12px; cursor:pointer;
+  width:80px; height:80px;
+  background:rgba(0,255,255,0.1); border:2px solid rgba(0,255,255,0.4);
+  color:#0ff; font-size:30px; border-radius:16px; cursor:pointer;
   -webkit-tap-highlight-color:transparent; touch-action:manipulation;
   display:flex; align-items:center; justify-content:center; user-select:none;
-  box-shadow:0 0 8px #0ff2;
+  box-shadow:0 0 12px #0ff3;
 }
-.dpad-btn:active { background:rgba(0,255,255,0.26); border-color:rgba(0,255,255,0.7); box-shadow:0 0 18px #0ff6; }
+.dpad-btn:active { background:rgba(0,255,255,0.3); border-color:rgba(0,255,255,0.8); box-shadow:0 0 22px #0ff8; }
 @media (min-width:700px) { #mobile-dpad { display:none; } }
 @media (max-width:699px) {
-  body { overflow:auto; align-items:flex-start; padding-top:env(safe-area-inset-top,0px); }
-  #game-wrap { justify-content:flex-start; padding-top:6px; gap:0; }
+  body { overflow:hidden; align-items:flex-start; padding-top:env(safe-area-inset-top,0px); }
+  #game-wrap { justify-content:flex-start; padding-top:4px; gap:0; }
 }
 </style>
 </head>
@@ -1666,9 +1666,7 @@ document.addEventListener('keydown',function(e){
 var _tx=0,_ty=0;
 document.addEventListener('touchstart',function(e){
   _tx=e.touches[0].clientX; _ty=e.touches[0].clientY;
-  var gw=document.getElementById('game-wrap');
-  if(!gw.classList.contains('hidden')) e.preventDefault();
-},{passive:false});
+},{passive:true});
 document.addEventListener('touchend',function(e){
   var ex=e.changedTouches[0].clientX, ey=e.changedTouches[0].clientY;
   var adx=Math.abs(ex-_tx), ady=Math.abs(ey-_ty);
@@ -1709,13 +1707,15 @@ document.addEventListener('touchend',function(e){
 function applyGameScale(){
   var wrap=document.getElementById('game-wrap');
   if(wrap.classList.contains('hidden')) return;
-  var dpad=document.getElementById('mobile-dpad');
-  var dpadH=window.innerWidth<700?(dpad.scrollHeight||148)+14:0;
-  var availH=window.innerHeight-dpadH-14;
-  var availW=window.innerWidth-8;
+  var isMobile=window.innerWidth<700;
+  var dpadH=isMobile?174:0;
+  var availH=window.innerHeight-dpadH-16;
+  var availW=window.innerWidth;
   var scale=Math.min(availW/600,availH/600);
   if(scale>1) scale=1;
-  document.getElementById('game-canvas-group').style.zoom=scale;
+  var group=document.getElementById('game-canvas-group');
+  group.style.transform='scale('+scale+')';
+  group.style.marginBottom=(600*scale-600)+'px';
 }
 window.addEventListener('resize',applyGameScale);
 
