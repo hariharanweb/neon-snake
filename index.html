@@ -22,7 +22,7 @@ canvas { display:block; box-shadow:0 0 60px #0ff3, 0 0 120px #0ff1; }
 #menu-score { color:#ff0; font-size:15px; letter-spacing:3px; text-shadow:0 0 10px #ff0; }
 
 /* Buttons */
-.btn { background:transparent; border:2px solid currentColor; font-family:'Courier New',monospace; font-size:17px; padding:13px 44px; letter-spacing:4px; cursor:pointer; transition:all 0.15s; }
+.btn { background:transparent; border:2px solid currentColor; font-family:'Courier New',monospace; font-size:17px; padding:13px 44px; letter-spacing:4px; cursor:pointer; transition:all 0.15s; touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 .btn:hover { filter:brightness(1.4); transform:scale(1.04); }
 .btn-cyan  { color:#0ff; box-shadow:0 0 14px #0ff4; }
 .btn-pink  { color:#f0f; box-shadow:0 0 14px #f0f4; }
@@ -64,7 +64,6 @@ canvas { display:block; box-shadow:0 0 60px #0ff3, 0 0 120px #0ff1; }
 .fx-card .fx-desc { font-size:10px; color:#446; letter-spacing:1px; text-align:center; padding:0 8px; line-height:1.5; }
 
 /* In-game overlay */
-#game-wrap { position:relative; }
 #hud { position:absolute; top:0; left:0; right:0; height:40px; pointer-events:none; }
 #gameover-overlay {
   position:absolute; inset:0; display:flex; flex-direction:column;
